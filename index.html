@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Birthday Merin! ❤️</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --blush: #FFB6C1;
+            --rose: #E8446A;
+            --cream: #FFF8F0;
+            --lavender: #E6CCFF;
+            --gold: #FFD700;
+            --dark-bg: #1a1a2e;
+            --text-color: #333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--cream);
+            color: var(--text-color);
+            overflow: hidden;
+            /* Prevent scrolling, full height pages */
+            width: 100vw;
+            height: 100vh;
+            transition: background-color 1s ease;
+            position: relative;
+        }
+
+        h1,
+        h2,
+        h3,
+        .cursive {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* --- BACKGROUND EFFECTS --- */
+        #floating-elements,
+        #stars-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* Twinkling Stars */
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite alternate ease-in-out;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.1;
+                transform: scale(0.8);
+            }
+
+            100% {
+                opacity: 0.8;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Floating Hearts / Petals */
+        .floating-item {
+            position: absolute;
+            bottom: -50px;
+            animation: floatUp var(--duration) linear forwards;
+            opacity: 0.7;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.7;
+            }
+
+            90% {
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translateY(-120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Sparkle Cursor */
+        .sparkle-trail {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            animation: sparkleFade 1s forwards;
+            filter: blur(1px);
+        }
+
+        @keyframes sparkleFade {
+            0% {
+                opacity: 0.8;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.1);
+            }
+        }
+
+        /* Canvas for confetti and fireworks */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* --- PAGE LAYOUT & TRANSITIONS --- */
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(30px);
+            pointer-events: none;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            z-index: 10;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .page.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+            z-index: 20;
+        }
+
+        /* --- NAVIGATION --- */
+        .next-btn {
+            background-color: var(--rose);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(232, 68, 106, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+            margin-top: 30px;
+            z-index: 30;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(232, 68, 106, 0.6);
+            background-color: #d83a5e;
+        }
+
+        .ribbon-btn {
+            background: linear-gradient(45deg, var(--rose), var(--blush));
+            color: white;
+            border: 2px solid white;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            font-family: 'Dancing Script', cursive;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            margin-top: 40px;
+            transition: all 0.3s;
+        }
+
+        .ribbon-btn::before,
+        .ribbon-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            width: 30px;
+            height: 30px;
+            background: var(--rose);
+            z-index: -1;
+        }
+
+        .ribbon-btn::before {
+            left: -10px;
+            transform: rotate(45deg);
+        }
+
+        .ribbon-btn::after {
+            right: -10px;
+            transform: rotate(45deg);
+        }
+
+        .ribbon-btn:hover {
+            transform: scale(1.1);
+        }
+
+        #back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 1.5rem;
+            background: rgba(255, 255, 255, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: background 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        #back-btn:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        #progress-dots {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background-color: var(--rose);
+            transform: scale(1.3);
+        }
+
+        .hidden {
+            display: none !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        /* --- POLAROID PLACEHOLDERS --- */
+        .polaroid {
+            background: white;
+            padding: 15px 15px 40px 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 5px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .polaroid:hover {
+            transform: scale(1.05) rotate(2deg) !important;
+            z-index: 10;
+        }
+
+        .polaroid .placeholder-img {
+            width: 200px;
+            height: 200px;
+            border: 2px dashed #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .polaroid p {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            margin-top: 15px;
+            color: #555;
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* --- PAGE 1: ENVELOPE --- */
+        .envelope-wrapper {
+            position: relative;
+            cursor: pointer;
+            margin: 40px 0;
+            transition: transform 0.3s;
+        }
+
+        .envelope-wrapper:hover {
+            transform: scale(1.05);
+        }
+
+        .envelope {
+            width: 250px;
+            height: 160px;
+            background: #e0d5c1;
+            position: relative;
+            border-radius: 5px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 125px solid transparent;
+            border-right: 125px solid transparent;
+            border-top: 90px solid #c9beaa;
+            transform-origin: top;
+            transition: transform 0.6s ease;
+            z-index: 4;
+        }
+
+        .envelope.open .flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope-front {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 125px solid #d4c7b3;
+            border-right: 125px solid #d4c7b3;
+            border-bottom: 80px solid #cabda8;
+            z-index: 3;
+        }
+
+        .letter {
+            position: absolute;
+            background: white;
+            width: 210px;
+            height: 130px;
+            left: 20px;
+            top: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.8s ease;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border: 1px dashed var(--rose);
+        }
+
+        .envelope.open .letter {
+            transform: translateY(-80px);
+            z-index: 5;
+        }
+
+        /* --- PAGE 2: MESSAGE --- */
+        .message-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            padding: 20px 30px;
+            border-radius: 15px;
+            max-width: 95%;
+            width: 700px;
+            margin: 10px 0;
+            box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-height: 40vh;
+            overflow-y: auto;
+        }
+
+        .message-card::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .message-card::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .message-card::-webkit-scrollbar-thumb {
+            background: var(--rose);
+            border-radius: 10px;
+        }
+
+        /* --- PAGE 3: TIMELINE --- */
+        .timeline {
+            position: relative;
+            max-width: 600px;
+            width: 90%;
+            margin: 0 auto;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: rgba(255, 215, 0, 0.5);
+        }
+
+        .milestone {
+            position: relative;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.6s ease;
+        }
+
+        .page.active .milestone {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .page.active .milestone:nth-child(1) {
+            transition-delay: 0.2s;
+        }
+
+        .page.active .milestone:nth-child(2) {
+            transition-delay: 0.4s;
+        }
+
+        .page.active .milestone:nth-child(3) {
+            transition-delay: 0.6s;
+        }
+
+        .page.active .milestone:nth-child(4) {
+            transition-delay: 0.8s;
+        }
+
+        .milestone-icon {
+            position: absolute;
+            left: -42px;
+            top: 0;
+            width: 26px;
+            height: 26px;
+            background: var(--dark-bg);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            z-index: 2;
+        }
+
+        .milestone-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: left;
+        }
+
+        .milestone-content h3 {
+            color: var(--gold);
+            margin-bottom: 5px;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        /* --- PAGE 4: REASONS CARDS --- */
+        .cards-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            max-width: 600px;
+            margin: 30px 0;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 130px;
+            height: 100px;
+            perspective: 1000px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .page.active .flip-card {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .flip-card-front {
+            background-color: white;
+            color: var(--rose);
+            font-size: 2rem;
+            font-family: 'Dancing Script', cursive;
+            border: 2px solid var(--blush);
+        }
+
+        .flip-card-back {
+            background-color: var(--rose);
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* --- PAGE 5: PHOTO WALL --- */
+        .photo-wall {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 50vh;
+            margin: 20px 0;
+        }
+
+        .photo-wall .polaroid {
+            position: absolute;
+            padding: 10px 10px 30px 10px;
+        }
+
+        .photo-wall .polaroid .placeholder-img {
+            width: 120px;
+            height: 120px;
+        }
+
+        .photo-wall .polaroid p {
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+
+        /* --- PAGE 6: PROMISE --- */
+        .parchment {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="%23f4ebd8"/><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="%23d0c3a8" stroke-width="4"/></svg>');
+            background-size: cover;
+            padding: 40px 30px;
+            border-radius: 5px;
+            max-width: 90%;
+            width: 450px;
+            margin: 30px 0;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            position: relative;
+            color: #3e2723;
+        }
+
+        .parchment::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            border: 1px solid rgba(139, 69, 19, 0.2);
+            pointer-events: none;
+        }
+
+        /* --- PAGE 7: CANDLES --- */
+        .candles-container {
+            display: flex;
+            gap: 30px;
+            margin: 40px 0;
+            justify-content: center;
+        }
+
+        .candle {
+            position: relative;
+            width: 40px;
+            height: 120px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .candle:hover {
+            transform: scale(1.05);
+        }
+
+        .wax {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to right, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            border-radius: 5px;
+            box-shadow: inset -5px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .wick {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 15px;
+            background: #333;
+            border-radius: 2px;
+        }
+
+        .flame {
+            position: absolute;
+            bottom: 112px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 35px;
+            background: #ffcf00;
+            border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+            box-shadow: 0 0 20px #ffcf00, 0 0 40px #ff6a00;
+            animation: flicker 0.5s infinite alternate;
+            transform-origin: bottom;
+            transition: opacity 0.3s;
+        }
+
+        .candle.blown .flame {
+            opacity: 0;
+            animation: none;
+        }
+
+        .smoke {
+            position: absolute;
+            bottom: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            background: rgba(200, 200, 200, 0.5);
+            border-radius: 50%;
+            opacity: 0;
+            filter: blur(3px);
+        }
+
+        .candle.blown .smoke {
+            animation: smokeUp 1.5s forwards;
+        }
+
+        @keyframes flicker {
+            0% {
+                transform: translateX(-50%) rotate(-2deg) scale(1);
+            }
+
+            50% {
+                transform: translateX(-50%) rotate(2deg) scale(1.05);
+                box-shadow: 0 0 25px #ffcf00, 0 0 50px #ff6a00;
+            }
+
+            100% {
+                transform: translateX(-50%) rotate(-1deg) scale(0.95);
+            }
+        }
+
+        @keyframes smokeUp {
+            0% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-50px) scale(3);
+            }
+        }
+
+        /* Final Pulse Heart */
+        .pulsing-heart {
+            font-size: 4rem;
+            animation: pulse 1s infinite alternate;
+            margin-top: 10px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* Utility */
+        .fade-in {
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.2rem !important;
+            }
+
+            h2 {
+                font-size: 1.8rem !important;
+            }
+
+            p {
+                font-size: 1rem !important;
+            }
+
+            .envelope {
+                transform: scale(0.85);
+                margin-bottom: 20px;
+            }
+
+            .message-card {
+                padding: 15px;
+                font-size: 1rem;
+                width: 95%;
+                margin: 10px 0;
+            }
+
+            .message-card p {
+                font-size: 1.2rem !important;
+            }
+
+            .timeline {
+                padding-left: 20px;
+            }
+
+            .milestone-icon {
+                left: -32px;
+                width: 20px;
+                height: 20px;
+                font-size: 10px;
+            }
+
+            .cards-grid {
+                gap: 10px;
+            }
+
+            .flip-card {
+                width: 100px;
+                height: 80px;
+            }
+
+            .flip-card-front {
+                font-size: 1.5rem;
+            }
+
+            .flip-card-back {
+                font-size: 0.8rem;
+                padding: 5px;
+            }
+
+            .photo-wall {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 5px !important;
+                height: auto !important;
+                padding: 10px;
+                place-items: center;
+                overflow-y: auto;
+                max-height: 55vh;
+            }
+
+            .photo-wall .polaroid {
+                position: static !important;
+                transform: scale(0.7) !important;
+                margin: -25px;
+                /* collapse space from scaling */
+            }
+
+            /* Add alternating slight rotations for mobile grid */
+            .photo-wall .polaroid:nth-child(odd) {
+                transform: scale(0.7) rotate(-4deg) !important;
+            }
+
+            .photo-wall .polaroid:nth-child(even) {
+                transform: scale(0.7) rotate(5deg) !important;
+            }
+
+            .photo-wall .polaroid:nth-child(3n) {
+                transform: scale(0.7) rotate(-2deg) !important;
+            }
+
+            .parchment {
+                padding: 30px 20px;
+            }
+
+            .parchment p {
+                font-size: 1.3rem !important;
+                line-height: 1.4;
+            }
+
+            .candles-container {
+                gap: 15px;
+                margin: 20px 0;
+            }
+
+            .candle {
+                transform: scale(0.8);
+            }
+
+            .ribbon-btn {
+                font-size: 1.1rem;
+                padding: 10px 20px;
+            }
+
+            .next-btn {
+                font-size: 1rem;
+                padding: 10px 20px;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Elements Containers -->
+    <div id="floating-elements"></div>
+    <div id="stars-container" style="display: none;"></div>
+
+    <canvas id="confetti-canvas"></canvas>
+    <canvas id="fireworks-canvas" style="display: none;"></canvas>
+
+    <!-- Navigation -->
+    <div id="back-btn" class="hidden" onclick="prevPage()">❮</div>
+    <div id="progress-dots"></div>
+
+    <!-- ========================================== -->
+    <!-- PAGE 1: WELCOME                            -->
+    <!-- ========================================== -->
+    <div class="page active" id="page-1" data-bg="var(--cream)">
+        <h1 style="font-size: 3rem; color: var(--rose); margin-bottom: 10px;">A Little Something For You 💌</h1>
+        <p style="font-size: 1.2rem; color: #666;">Tap to open your surprise...</p>
+
+        <div class="envelope-wrapper" onclick="openEnvelope()">
+            <div class="envelope" id="main-envelope">
+                <div class="flap"></div>
+                <div class="envelope-front"></div>
+                <div class="letter">
+                    <div style="text-align: center;">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="var(--rose)">
+                            <path
+                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                        </svg>
+                        <p class="cursive" style="font-size: 1.5rem; margin-top: 5px; color: var(--rose);">For Merin</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button id="btn-page-1" class="next-btn hidden" onclick="nextPage()">Open ➔</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- PAGE 2: BIRTHDAY MESSAGE                   -->
+    <!-- ========================================== -->
+    <div class="page" id="page-2" data-bg="#fff0f5">
+        <h1 style="font-size: 2.2rem; color: var(--rose); line-height: 1.1; margin-top: 10px;">Happy
+            Birthday,<br>MERINNNN<br>(WALSANNN)
+        </h1>
+
+        <!-- SVG Cake -->
+        <svg width="80" height="80" viewBox="0 0 100 100" style="margin: 10px 0;">
+            <!-- Plates -->
+            <path d="M 10 85 Q 50 95 90 85" fill="none" stroke="#ddd" stroke-width="4" />
+            <path d="M 15 80 Q 50 90 85 80" fill="none" stroke="#ccc" stroke-width="2" />
+            <!-- Bottom Tier -->
+            <rect x="20" y="55" width="60" height="25" rx="5" fill="#f8b195" />
+            <path d="M 20 65 Q 35 70 50 65 T 80 65" fill="none" stroke="#f67280" stroke-width="3" />
+            <!-- Top Tier -->
+            <rect x="30" y="30" width="40" height="25" rx="5" fill="#f67280" />
+            <path d="M 30 40 Q 40 45 50 40 T 70 40" fill="none" stroke="#c06c84" stroke-width="3" />
+            <!-- Drip icing -->
+            <path d="M 30 30 Q 35 45 40 30 Q 45 50 50 30 Q 55 45 60 30 Q 65 40 70 30" fill="#fff" />
+            <path d="M 20 55 Q 27 70 35 55 Q 42 75 50 55 Q 57 70 65 55 Q 72 75 80 55" fill="#fff" />
+            <!-- Candles (static for illustration) -->
+            <rect x="47" y="10" width="6" height="20" fill="#fff" stroke="#ddd" stroke-width="1" />
+            <path d="M 50 10 Q 53 5 50 0 Q 47 5 50 10" fill="#ffcf00" />
+        </svg>
+
+        <div class="message-card">
+            <p class="cursive" style="font-size: 1.4rem;">
+                Happyy Birthdayyy mera walsasnnn🥳♥️<br>Love you so soo muchhh😚♥️<br>
+                Angane ende kochu 22 aayy but you're still my baby n my little cutiee😚<br>Innem kore varsham ninne
+                ragebait and annoy cheyyan ollatha hehee😁.<br>Happy birthday to my best friend, my home, my cutieee, my
+                julab
+                jam, my gundumani heheee🫂♥️
+            </p>
+        </div>
+
+        <div class="polaroid" style="transform: rotate(-3deg); padding: 10px 10px 30px 10px; margin-bottom: 5px;">
+            <div class="placeholder-img" style="width: 110px; height: 110px;">
+                <img src="merin1.jpeg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;"
+                    alt="Merin">
+            </div>
+            <p style="font-size: 1rem; margin-top: 8px;">cutieee</p>
+        </div>
+
+        <button class="ribbon-btn" style="margin-top: 5px;" onclick="nextPage()">Unwrap More ➔</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- PAGE 3: REASONS                            -->
+    <!-- ========================================== -->
+    <div class="page" id="page-3" data-bg="var(--blush)">
+        <h2 style="font-size: 2.5rem; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.2);">Things I Love About You
+        </h2>
+        <p style="color: #fff; margin-bottom: 20px;">(Tap to reveal)</p>
+
+        <div class="cards-grid">
+            <!-- Cards populated by JS to add stagger delay -->
+        </div>
+
+        <button class="next-btn" onclick="nextPage()" style="background: white; color: var(--rose);">Next ➔</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- PAGE 5: PHOTO WALL                         -->
+    <!-- ========================================== -->
+    <!-- PAGE 4: HER SINGLE PHOTOS                  -->
+    <!-- ========================================== -->
+    <div class="page" id="page-4" data-bg="var(--lavender)">
+        <h2 style="font-size: 3rem; color: var(--rose); margin-bottom: 10px;">The Most Beautiful Girl ✨</h2>
+        <p style="color: #555; margin-bottom: 30px;">Just you being flawlessly you.</p>
+
+        <div class="photo-wall" style="height: 50vh;">
+            <!-- Photo 1 -->
+            <div class="polaroid" style="top: 0%; left: 10%; transform: rotate(-5deg); z-index: 2;">
+                <div class="placeholder-img" style="width: 120px; height: 120px;">
+                    <img src="merin4.jpeg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;"
+                        alt="Merin">
+                </div>
+                <p>Gorgeous!</p>
+            </div>
+            <!-- Photo 2 -->
+            <div class="polaroid" style="bottom: 5%; left: 5%; transform: rotate(8deg); z-index: 1;">
+                <div class="placeholder-img" style="width: 130px; height: 130px;">
+                    <img src="merin3.jpeg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;"
+                        alt="Merin">
+                </div>
+                <p>That smile...</p>
+            </div>
+            <!-- Photo 3 (Center) -->
+            <div class="polaroid"
+                style="top: 20%; left: 50%; transform: translateX(-50%) rotate(2deg); z-index: 5; box-shadow: 0 15px 30px rgba(0,0,0,0.2);">
+                <div class="placeholder-img" style="width: 160px; height: 160px; border-color: var(--rose);">
+                    <img src="merin2.jpeg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;"
+                        alt="Merin">
+                </div>
+                <p style="color: var(--rose);">Stunning ❤️</p>
+            </div>
+            <!-- Photo 4 -->
+            <div class="polaroid" style="top: 5%; right: 10%; transform: rotate(6deg); z-index: 3;">
+                <div class="placeholder-img" style="width: 120px; height: 120px;">
+                    <img src="merin5.jpeg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;"
+                        alt="Merin">
+                </div>
+                <p>Perfect!</p>
+            </div>
+            <!-- Photo 5 -->
+            <div class="polaroid" style="bottom: 5%; right: 5%; transform: rotate(-7deg); z-index: 4;">
+                <div class="placeholder-img" style="width: 130px; height: 130px;">
+                    <img src="merin6.jpeg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;"
+                        alt="Merin">
+                </div>
+                <p>Cute</p>
+            </div>
+            <!-- Photo 6 -->
+            <div class="polaroid"
+                style="bottom: -5%; left: 45%; transform: translateX(-50%) rotate(-3deg); z-index: 2;">
+                <div class="placeholder-img" style="width: 110px; height: 110px;">
+                    <img src="merin7.jpeg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;"
+                        alt="Merin">
+                </div>
+                <p>Flawless</p>
+            </div>
+        </div>
+
+        <button class="next-btn" onclick="nextPage()" style="background: white; color: var(--rose);">Next ➔</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- PAGE 5: PHOTO WALL                         -->
+    <!-- ========================================== -->
+    <div class="page" id="page-5" data-bg="#f4ebd8">
+        <h2 style="font-size: 3rem; color: var(--rose); margin-bottom: 10px;">Our Memories 📸</h2>
+        <p style="color: #666;">Every picture tells our story</p>
+
+        <div class="photo-wall">
+            <div class="polaroid" style="top: 5%; left: 10%; transform: rotate(-8deg);">
+                <div class="placeholder-img"><img src="to1.jpeg"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;" alt="Mto"></div>
+                <p>Cute selfie</p>
+            </div>
+            <div class="polaroid" style="top: 15%; right: 5%; transform: rotate(10deg);">
+                <div class="placeholder-img"><img src="to2.jpeg"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;" alt="Mto"></div>
+                <p>Mundhinam</p>
+            </div>
+            <!-- 5th Center Photo -->
+            <div class="polaroid"
+                style="top: 35%; left: 45%; transform: translateX(-50%) rotate(-3deg); z-index: 5; box-shadow: 0 15px 30px rgba(0,0,0,0.15);">
+                <div class="placeholder-img" style="width: 140px; height: 140px;"><img src="to3.jpeg"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;" alt="Mto"></div>
+                <p>First Date</p>
+            </div>
+            <div class="polaroid" style="bottom: 5%; left: 10%; transform: rotate(5deg);">
+                <div class="placeholder-img"><img src="to4.jpeg"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;" alt="Mto"></div>
+                <p>Pottery</p>
+            </div>
+            <div class="polaroid" style="bottom: 15%; right: 15%; transform: rotate(-6deg);">
+                <div class="placeholder-img"><img src="to5.jpeg"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;" alt="Mto"></div>
+                <p>Mirror Selfie</p>
+            </div>
+        </div>
+
+        <button class="next-btn" onclick="nextPage()">Next ➔</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- PAGE 6: PROMISE                            -->
+    <!-- ========================================== -->
+    <div class="page" id="page-6" data-bg="#100b21">
+        <!-- SVG Moon -->
+        <svg width="80" height="80" viewBox="0 0 100 100" style="margin-bottom: 20px;">
+            <path d="M 50 10 A 40 40 0 1 0 90 50 A 30 30 0 1 1 50 10" fill="#f4f1de" />
+        </svg>
+
+        <h2 style="font-size: 2.8rem; color: var(--lavender);">A Promise to You</h2>
+
+        <div class="parchment">
+            <p class="cursive" style="font-size: 1.5rem; line-height: 1.6;">
+                Areeyyy Walsannn,<br>I promise to be your best friend forever<br>
+                I promise to always be there for you, even when things gets difficult, to support you, to make you
+                happy and to make you smile.<br>I promise to annoy and ragebait you Forever.
+                <br><br>
+                Forever yours, febinnn sunniee❤️
+            </p>
+
+            <!-- Small attached photo -->
+            <div class="polaroid"
+                style="position: absolute; bottom: -20px; right: -25px; transform: rotate(12deg); z-index: 5; padding: 8px 8px 25px 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.4);">
+                <div class="placeholder-img" style="width: 70px; height: 70px;">
+                    <img src="feb.jpeg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;"
+                        alt="Mto">
+                </div>
+            </div>
+        </div>
+
+        <button class="next-btn" onclick="nextPage()" style="background: var(--lavender); color: #100b21;">Next
+            ➔</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- PAGE 7: MAKE A WISH                        -->
+    <!-- ========================================== -->
+    <div class="page" id="page-7" data-bg="var(--cream)">
+        <h2 id="wish-title" style="font-size: 3rem; color: var(--rose);">Make a Wish! 🎂</h2>
+        <p id="wish-subtitle" style="margin-bottom: 40px; font-size: 1.2rem; color: #666;">Tap the candles to blow them
+            out</p>
+
+        <div class="candles-container" id="candles-box">
+            <div class="candle" onclick="blowOut(this)">
+                <div class="wax"></div>
+                <div class="wick"></div>
+                <div class="flame"></div>
+                <div class="smoke"></div>
+            </div>
+            <div class="candle" onclick="blowOut(this)">
+                <div class="wax"></div>
+                <div class="wick"></div>
+                <div class="flame"></div>
+                <div class="smoke"></div>
+            </div>
+            <div class="candle" onclick="blowOut(this)">
+                <div class="wax"></div>
+                <div class="wick"></div>
+                <div class="flame"></div>
+                <div class="smoke"></div>
+            </div>
+        </div>
+
+        <div id="finale-message" class="hidden">
+            <h1 style="font-size: 3.5rem; color: var(--rose); text-shadow: 2px 2px 5px rgba(232, 68, 106, 0.2);">Happy
+                Birthday, my love! 🎉</h1>
+            <h2 class="cursive" style="font-size: 2.5rem; color: #d83a5e; margin: 10px 0;">I love you more every day.
+            </h2>
+
+            <div class="polaroid" style="margin: 30px auto; transform: rotate(2deg);">
+                <div class="placeholder-img" style="width: 180px; height: 180px;">
+                    <img src="us.jpeg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;"
+                        alt="Mto">
+                </div>
+                <p>Happy Birthday ❤️</p>
+            </div>
+
+            <div class="pulsing-heart">❤️</div>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC                           -->
+    <!-- ========================================== -->
+    <script>
+        const totalPages = 7;
+        let currentPage = 1;
+        let candlesBlown = 0;
+
+        // --- NAVIGATION LOGIC ---
+        function initDots() {
+            const dotsContainer = document.getElementById('progress-dots');
+            for (let i = 1; i <= totalPages; i++) {
+                const dot = document.createElement('div');
+                dot.className = `dot ${i === 1 ? 'active' : ''}`;
+                dot.id = `dot-${i}`;
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function updateNavigation() {
+            // Update dots
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index + 1 === currentPage);
+            });
+
+            // Update Back Button
+            const backBtn = document.getElementById('back-btn');
+            if (currentPage > 1) {
+                backBtn.classList.remove('hidden');
+            } else {
+                backBtn.classList.add('hidden');
+            }
+
+            // Page Background and Effects Logic
+            const activePage = document.getElementById(`page-${currentPage}`);
+            const bgColor = activePage.getAttribute('data-bg');
+            document.body.style.backgroundColor = bgColor;
+
+            // Stars Background handling
+            const starsContainer = document.getElementById('stars-container');
+            if (currentPage === 6) {
+                starsContainer.style.display = 'block';
+            } else {
+                starsContainer.style.display = 'none';
+            }
+
+            // Trigger animations based on page
+            if (currentPage === 2) {
+                triggerConfetti();
+            }
+            if (currentPage === 3) {
+                // Generate cards if not already there
+                const grid = document.querySelector('.cards-grid');
+                if (grid.children.length === 0) {
+                    generateReasonCards();
+                }
+            }
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                document.getElementById(`page-${currentPage}`).classList.remove('active');
+                currentPage++;
+                document.getElementById(`page-${currentPage}`).classList.add('active');
+                updateNavigation();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                document.getElementById(`page-${currentPage}`).classList.remove('active');
+                currentPage--;
+                document.getElementById(`page-${currentPage}`).classList.add('active');
+                updateNavigation();
+            }
+        }
+
+        // --- PAGE 1: ENVELOPE ---
+        function openEnvelope() {
+            const env = document.getElementById('main-envelope');
+            if (!env.classList.contains('open')) {
+                env.classList.add('open');
+                setTimeout(() => {
+                    document.getElementById('btn-page-1').classList.remove('hidden');
+                }, 800);
+            }
+        }
+
+        // --- PAGE 4: REASONS CARDS ---
+        const reasons = [
+            "Your beautiful smile",
+            "Your laughs",
+            "The way you care about me",
+            "Your childish behaviour around me",
+            "Your hugs",
+            "Your kisses",
+            "Your understanding",
+            "Everything about you"
+        ];
+
+        function generateReasonCards() {
+            const grid = document.querySelector('.cards-grid');
+            reasons.forEach((reason, index) => {
+                const card = document.createElement('div');
+                card.className = 'flip-card';
+                card.style.transitionDelay = `${index * 0.15}s`;
+
+                card.innerHTML = `
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">${index + 1}</div>
+                        <div class="flip-card-back">${reason}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // --- PAGE 7: CANDLES & FIREWORKS ---
+        function blowOut(candleElement) {
+            if (!candleElement.classList.contains('blown')) {
+                candleElement.classList.add('blown');
+                candlesBlown++;
+
+                if (candlesBlown === 3) {
+                    setTimeout(() => {
+                        document.getElementById('candles-box').classList.add('hidden');
+                        document.getElementById('wish-title').classList.add('hidden');
+                        document.getElementById('wish-subtitle').classList.add('hidden');
+
+                        const finale = document.getElementById('finale-message');
+                        finale.classList.remove('hidden');
+                        finale.classList.add('fade-in');
+
+                        startFireworks();
+                    }, 1000);
+                }
+            }
+        }
+
+        // --- EFFECTS: FLOATING HEARTS & STARS ---
+        function createFloatingItems() {
+            const container = document.getElementById('floating-elements');
+            const items = ['❤️', '✨', '🌸', '💖'];
+
+            setInterval(() => {
+                if (currentPage === 6) return; // Don't show hearts on dark pages
+
+                const item = document.createElement('div');
+                item.className = 'floating-item';
+                item.innerText = items[Math.floor(Math.random() * items.length)];
+
+                // Randomize position, size, and duration
+                item.style.left = Math.random() * 100 + 'vw';
+                item.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                item.style.setProperty('--duration', (Math.random() * 5 + 5) + 's');
+
+                container.appendChild(item);
+
+                setTimeout(() => {
+                    item.remove();
+                }, 10000);
+            }, 500);
+        }
+
+        function createStars() {
+            const container = document.getElementById('stars-container');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+
+                star.style.setProperty('--duration', (Math.random() * 2 + 1) + 's');
+                star.style.animationDelay = Math.random() * 2 + 's';
+
+                container.appendChild(star);
+            }
+        }
+
+        // --- CURSOR SPARKLE TRAIL ---
+        document.addEventListener('mousemove', function (e) {
+            // Only on desktop
+            if (window.innerWidth < 768) return;
+
+            if (Math.random() > 0.8) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle-trail';
+                sparkle.style.left = e.pageX + 'px';
+                sparkle.style.top = e.pageY + 'px';
+
+                // Random color for sparkle based on page
+                if (currentPage === 6) {
+                    sparkle.style.backgroundColor = '#fff';
+                }
+
+                document.body.appendChild(sparkle);
+
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 1000);
+            }
+        });
+
+        // --- CANVAS EFFECTS (CONFETTI) ---
+        function triggerConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const pieces = [];
+            const colors = ['#fce18a', '#ff726d', '#b48def', '#f4306d'];
+
+            for (let i = 0; i < 100; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 10 + 5,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speedY: Math.random() * 3 + 2,
+                    speedX: Math.random() * 2 - 1,
+                    rotation: Math.random() * 360,
+                    rotationSpeed: Math.random() * 10 - 5
+                });
+            }
+
+            function animate() {
+                if (currentPage !== 2) return; // Stop if left page
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                pieces.forEach(p => {
+                    p.y += p.speedY;
+                    p.x += p.speedX;
+                    p.rotation += p.rotationSpeed;
+
+                    if (p.y > canvas.height) p.y = -20;
+                    if (p.x > canvas.width) p.x = 0;
+                    if (p.x < 0) p.x = canvas.width;
+
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rotation * Math.PI / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                    ctx.restore();
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        // --- CANVAS EFFECTS (FIREWORKS) ---
+        function startFireworks() {
+            const canvas = document.getElementById('fireworks-canvas');
+            canvas.style.display = 'block';
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+
+            function Particle(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.velocity = {
+                    x: (Math.random() - 0.5) * 8,
+                    y: (Math.random() - 0.5) * 8
+                };
+                this.alpha = 1;
+                this.friction = 0.98;
+                this.gravity = 0.05;
+            }
+
+            Particle.prototype.draw = function () {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.restore();
+            };
+
+            Particle.prototype.update = function () {
+                this.draw();
+                this.velocity.x *= this.friction;
+                this.velocity.y *= this.friction;
+                this.velocity.y += this.gravity;
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                this.alpha -= 0.01;
+            };
+
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+
+            function createFirework() {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height / 2; // Explode in top half
+                const color = colors[Math.floor(Math.random() * colors.length)];
+
+                for (let i = 0; i < 50; i++) {
+                    particles.push(new Particle(x, y, color));
+                }
+            }
+
+            // Create initial fireworks
+            for (let i = 0; i < 3; i++) setTimeout(createFirework, i * 500);
+
+            // Continue randomly
+            const fwInterval = setInterval(() => {
+                if (currentPage === 7) createFirework();
+                else clearInterval(fwInterval);
+            }, 800);
+
+            function animate() {
+                if (currentPage !== 7) return;
+                ctx.fillStyle = 'rgba(26, 26, 46, 0.2)'; // slight trail effect
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    particles[i].update();
+                    if (particles[i].alpha <= 0) {
+                        particles.splice(i, 1);
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+
+            // Change background to dark for fireworks
+            document.body.style.backgroundColor = 'var(--dark-bg)';
+            document.getElementById('page-7').setAttribute('data-bg', '#1a1a2e');
+
+            animate();
+        }
+
+        // Initialize
+        window.onload = () => {
+            initDots();
+            createFloatingItems();
+            createStars();
+        };
+
+        // Window resize handler for canvas
+        window.addEventListener('resize', () => {
+            if (currentPage === 2) {
+                const cvs = document.getElementById('confetti-canvas');
+                cvs.width = window.innerWidth;
+                cvs.height = window.innerHeight;
+            } else if (currentPage === 7) {
+                const cvs = document.getElementById('fireworks-canvas');
+                cvs.width = window.innerWidth;
+                cvs.height = window.innerHeight;
+            }
+        });
+    </script>
+</body>
+
+</html>
